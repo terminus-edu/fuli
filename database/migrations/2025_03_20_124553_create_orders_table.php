@@ -13,18 +13,19 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->char('no', 64)->index('no');
+            $table->char('no', 18)->index('no');
             $table->string('merchant_no')->nullable()->index('merchant_no');
             $table->string('remark')->nullable();
-            $table->unsignedBigInteger('agent_id')->index('agent');
+            $table->unsignedBigInteger('agent_id')->nullable()->index('agent');
             $table->unsignedBigInteger('package_id')->index('package');
-            $table->unsignedBigInteger('member_id')->index('member');
+            $table->unsignedBigInteger('member_id')->nullable()->index('member');
             $table->decimal('amount',10,2)->default(0);
             $table->decimal('pay_amount',10,2)->default(0);
             $table->enum('pay_status', ['unpaid', 'paid'])->default('unpaid')->index('pay_status');
             $table->enum('status', ['pending', 'completed', 'expired'])->default('pending')->index('status');
             $table->enum('exchange_status',['pending','completed','expired'])->default('pending')->index('exchange_status');
-            $table->char('code',64)->index('code');
+            $table->char('code',16)->index('code');
+            $table->string('pay_method')->nullable();
             $table->timestamp('pay_at')->nullable();
             $table->timestamp('exchange_at')->nullable();
             $table->timestamps();

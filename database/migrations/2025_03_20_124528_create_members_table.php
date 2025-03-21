@@ -24,6 +24,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('member_id')->index('member');
             $table->unsignedBigInteger('subscribe_id')->index('subscribe');
+            $table->timestamp('expired_at')->nullable();
             $table->timestamps();
         });
     }
