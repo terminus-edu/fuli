@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Package;
 use App\Services\PayService;
 use Illuminate\Http\Request;
+use Log;
 
 class OrderController extends Controller
 {
@@ -47,6 +48,7 @@ class OrderController extends Controller
             'money' => $order->amount,
         ];
         $url = PayService::payUrl($params);
+        Log::info('pay url:'.$url);
         return redirect($url);
     }
 }
