@@ -1,5 +1,6 @@
 <?php
 namespace App\Services;
+use App\Models\Member;
 use App\Models\Order;
 use App\Models\Package;
 use DB;
@@ -22,8 +23,6 @@ class OrderService{
                 $addSubscribes = $subscribes->filter(function($a) use($subscribes,$existingSubscribes){
                     return !$existingSubscribes->contains('id',$a->id);
                 });
-                
-
             }
             $order->save();
             DB::rollBack();
@@ -32,5 +31,30 @@ class OrderService{
             return false;
         }
         return true;
+    }
+    public function exchange(int $memberId,string $code){
+        $order = Order::where('code',$code)->first();
+        if(empty($order)){
+            throw new \Exception(message: '订单不存在');
+        }
+        $member = Member::find($memberId);
+        if(empty($member)){
+            throw new \Exception('用户不存在');
+        }
+        if(empty($order->member) || $order->pay_status!='paid'){
+            throw new \Exception('不能兑换');
+        }
+        DB::beginTransaction();
+        try{
+            $order->member_id = $member->id;
+            $order->exchange_status = 'comp';
+            $order->exchange_at = now();
+            $order->save();
+            DB::commit();
+        }catch(\Exception $e){
+            DB::rollBack();
+            throw $e;
+        }
+
     }
 }

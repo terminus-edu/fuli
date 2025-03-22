@@ -63,6 +63,7 @@ class AgentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label('名称'),
+                Tables\Columns\TextColumn::make('id')->label('充值链接')->formatStateUsing(fn (string $state) => route('orders.create',['agent-id'=>encode_id($state)]))->copyable()->copyableState(fn ($state) => route('orders.create',['agent-id'=>encode_id($state)])),
                 Tables\Columns\TextColumn::make('created_at')->label('创建时间'),
             ])
             ->filters([

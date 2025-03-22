@@ -43,7 +43,7 @@
 
         <!-- 提交按钮 -->
         <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">
-            立即支付
+            创建订单
         </button>
     </form>
     @if (session('error'))

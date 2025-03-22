@@ -84,7 +84,7 @@ class CreateOrder extends Component
         $order->exchange_status = 'pending';
         $order->code = Str::random(16);
         $order->save();
-        return redirect()->route('orders.info',['no'=>$order->no]);
+        return redirect()->route('orders.pay',['no'=>$order->no]);
     }
 
     public function render()
