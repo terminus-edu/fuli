@@ -50,9 +50,7 @@ class UrlResource extends Resource
                     ->image()
                     ->imageEditor()
                     ->imageEditorAspectRatios([
-                        '16:9',
-                        '4:3',
-                        '1:1',
+                        '3:2',
                     ])
                     ->label('封面(600*400)')
                     ->required()
