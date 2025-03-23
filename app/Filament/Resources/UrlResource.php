@@ -54,7 +54,7 @@ class UrlResource extends Resource
                         '4:3',
                         '1:1',
                     ])
-                    ->label('封面(400*600)')
+                    ->label('封面(600*400)')
                     ->required()
                     ->columnSpan(10),
                 Forms\Components\Toggle::make('is_recommended')
