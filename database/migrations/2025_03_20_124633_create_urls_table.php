@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('urls', function (Blueprint $table) {
             $table->id();
-            $table->string('cover');
+            $table->string('icon')->nullable();
             $table->string('title');
+            $table->string('cover')->nullable();
+            $table->boolean('is_recommended')->default(false)->index('recommended');
             $table->string('url');
             $table->enum('status', ['enabled', 'disabled'])->default('enabled')->index('status');
             $table->timestamps();

@@ -5,20 +5,18 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UrlResource\Pages;
 use App\Filament\Resources\UrlResource\RelationManagers;
 use App\Models\Url;
-use App\Models\UrlGroup;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UrlResource extends Resource
 {
-    protected static ?string $label = "网址管理";
+    protected static ?string $label = '网址管理';
     protected static ?string $model = Url::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -35,9 +33,19 @@ class UrlResource extends Resource
                     ->preload(),
                 Forms\Components\TextInput::make('title')->label('名称')->required()->columnSpan(10),
                 Forms\Components\TextInput::make('url')->url()->label('地址')->required()->columnSpan(10),
-
+                Forms\Components\FileUpload::make('icon')
+                    ->disk('public')
+                    ->directory(config('app.env') . '/fuli/cover/' . now()->format('Y/m/d'))
+                    ->image()
+                    ->imageEditor()
+                    ->imageEditorAspectRatios([
+                        '1:1',
+                    ])
+                    ->label('图标(150*150)')
+                    ->required()
+                    ->columnSpan(10),
                 Forms\Components\FileUpload::make('cover')
-                    ->disk('bitiful')
+                    ->disk('public')
                     ->directory(config('app.env') . '/fuli/cover/' . now()->format('Y/m/d'))
                     ->image()
                     ->imageEditor()
@@ -49,10 +57,17 @@ class UrlResource extends Resource
                     ->label('封面(400*600)')
                     ->required()
                     ->columnSpan(10),
-                Forms\Components\Radio::make('status')->required()->options([
-                    'enabled' => '启用',
-                    'disabled' => '禁用',
-                ])
+                Forms\Components\Toggle::make('is_recommended')
+                    ->label('推荐')
+                    ->default(true)
+                    ->inline(false)
+                    ->columnSpan(12),
+                Forms\Components\Radio::make('status')
+                    ->required()
+                    ->options([
+                        'enabled' => '启用',
+                        'disabled' => '禁用',
+                    ])
                     ->default('enabled')
                     ->label('状态')
                     ->inline()
