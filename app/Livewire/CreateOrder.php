@@ -79,10 +79,11 @@ class CreateOrder extends Component
         $order->package_id = $package->id;
         $order->amount = $package->price;
         $order->pay_amount = $package->price;
+        $order->pay_method = $this->paymentMethod;
         $order->status = 'pending';
         $order->pay_status = 'unpaid';
         $order->exchange_status = 'pending';
-        $order->code = Str::random(16);
+        $order->code = strtoupper(Str::random(16));
         $order->save();
         return redirect()->route('orders.pay',['no'=>$order->no]);
     }

@@ -9,7 +9,7 @@ class Member extends Model
 {
     use SoftDeletes;
     public function subscribes(){
-        return $this->belongsToMany(Subscribe::class, 'member_subscribe', 'member_id', 'subscribe_id');
+        return $this->belongsToMany(Subscribe::class, 'member_subscribe', 'member_id', 'subscribe_id')->withPivot('expired_at');
     }
     public function agent(){
         return $this->belongsTo(related: User::class, foreignKey: 'agent_id');

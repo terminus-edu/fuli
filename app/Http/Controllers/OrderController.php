@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Package;
+use App\Services\OrderService;
 use App\Services\PayService;
 use Illuminate\Http\Request;
 use Log;
@@ -24,7 +25,10 @@ class OrderController extends Controller
 
     public function exchane(Request $request)
     {
-        return 'order exchane';
+        $member = $request->member();
+        $no = $request->input('no');
+        OrderService::exchange($member, $no);
+        return response()->json(['code' => 200, 'msg' => 'success']);
     }
 
     public function index(Request $request)
