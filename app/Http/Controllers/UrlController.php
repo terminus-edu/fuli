@@ -18,14 +18,14 @@ class UrlController extends Controller
             ->get(['id', 'cover', 'title', 'url']);
         return response()->json([
             'code' => 200,
-            'message'=> 'success',
+            'message' => 'success',
             'data' => [
                 'urls' => $urls->map(function ($url) {
                     return [
                         'id' => encode_id($url->id),
                         'title' => $url->title,
-                        'url' => Storage::disk('public')->url($url->cover),
-                        'cover' => $url->cover,
+                        'url' => $url->url,
+                        'cover' => Storage::disk('public')->url($url->cover),
                     ];
                 })
             ]
