@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class UrlController extends Controller
 {
-    // 推荐
     public function recommendeds()
     {
         $urls = Url::query()
@@ -25,7 +24,7 @@ class UrlController extends Controller
                     return [
                         'id' => encode_id($url->id),
                         'title' => $url->title,
-                        'url' => $url->url,
+                        'url' => Storage::disk('public')->url($url->cover),
                         'cover' => $url->cover,
                     ];
                 })
