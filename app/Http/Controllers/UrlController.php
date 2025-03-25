@@ -15,7 +15,7 @@ class UrlController extends Controller
             ->where('is_recommended', true)
             ->latest('updated_at')
             ->limit(10)
-            ->get(['id', 'cover', 'title', 'url']);
+            ->get(['id', 'cover', 'title', 'url', 'icon']);
         return response()->json([
             'code' => 200,
             'message' => 'success',
@@ -26,6 +26,7 @@ class UrlController extends Controller
                         'title' => $url->title,
                         'url' => $url->url,
                         'cover' => Storage::disk('public')->url($url->cover),
+                        'icon' => Storage::disk('public')->url($url->icon),
                     ];
                 })
             ]
