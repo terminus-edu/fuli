@@ -34,7 +34,7 @@ class UrlController extends Controller
             ->latest('updated_at')
             ->offset($offset)
             ->limit($limit)
-            ->get(['id', 'cover', 'title', 'url']);
+            ->get(['id', 'cover', 'title', 'url','icon']);
 
         foreach ($urls as &$url) {
             $url->cover = Storage::disk('bitiful')->url($url->cover);
