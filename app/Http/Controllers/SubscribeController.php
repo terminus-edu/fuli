@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MemberRequest;
 use App\Models\Subscribe;
+use Illuminate\Support\Carbon;
 class SubscribeController extends Controller
 {
     //
@@ -32,7 +33,7 @@ class SubscribeController extends Controller
                 $items = array_merge($items, $contentArray);
             }
             $top = $memberSubscribes->first();
-            $subtitle = "过期时间:".$top->expired_at->format('Y-m-d H:i:s');
+            $subtitle = "过期时间:".(new Carbon($top->expired_at))->format('Y-m-d H:i:s');
         }
         return response()->json([
             'code' => 200,

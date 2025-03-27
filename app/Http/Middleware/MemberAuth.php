@@ -15,7 +15,6 @@ class MemberAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // 检查必需的请求头字段
         $requiredHeaders = ['uuid'];
         
         foreach ($requiredHeaders as $header) {
