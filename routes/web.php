@@ -13,7 +13,6 @@ Route::get('/', function () {
 
 Route::get('/api/urls/groups', [UrlController::class, 'groups']);
 Route::get('/api/urls/index', [UrlController::class, 'index']);
-Route::get('/api/urls/recommendeds', [UrlController::class,'recommendeds']);
 Route::middleware([MemberAuth::class])->prefix('api')->group(function () {
     Route::get('subscribes/free', [SubscribeController::class, 'free']);
     Route::get('subscribes/premium', [SubscribeController::class, 'premium']);
