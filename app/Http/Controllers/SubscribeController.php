@@ -23,7 +23,7 @@ class SubscribeController extends Controller
     {
         $member = $request->member();
         $memberSubscribes = $member->subscribes()->where('expired_at', '>', now())->orderBy('expired_at','desc')->get();
-        $memberSubscribeIds = $memberSubscribes->pluck('subscribe_id')->toArray();
+        $memberSubscribeIds = $memberSubscribes->pluck('id')->toArray();
         $items = [];
         $subtitle = '';
         if (!empty($memberSubscribeIds)) {
