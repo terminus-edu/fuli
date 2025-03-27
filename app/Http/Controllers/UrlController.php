@@ -50,6 +50,7 @@ class UrlController extends Controller
                         'title' => $url->title,
                         'url' => $url->url,
                         'cover' => $url->cover,
+                        'icon'=> $url->icon,
                     ];
                 })
             ]
