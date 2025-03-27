@@ -16,16 +16,16 @@ class MemberAuth
     public function handle(Request $request, Closure $next): Response
     {
         // 检查必需的请求头字段
-        $requiredHeaders = ['uuid', 'model', 'os'];
+        $requiredHeaders = ['uuid'];
         
-        // foreach ($requiredHeaders as $header) {
-        //     if (!$request->hasHeader($header)) {
-        //         return response()->json([
-        //             'code' => 400,
-        //             'message' => "缺少必需的请求头: {$header}"
-        //         ], 400);
-        //     }
-        // }
+        foreach ($requiredHeaders as $header) {
+            if (!$request->hasHeader($header)) {
+                return response()->json([
+                    'code' => 400,
+                    'message' => "缺少必需的请求头: {$header}"
+                ], 400);
+            }
+        }
         
         return $next($request);
     }

@@ -21,15 +21,26 @@ class SubscribeController extends Controller
     public function premium(MemberRequest $request)
     {
         $member = $request->member();
-        $memberSubscribeIds = $member->subscribes()->where('expired_at', '>', now())->pluck('subscribe_id')->toArray();
+        $memberSubscribes = $member->subscribes()->where('expired_at', '>', now())->orderBy('expired_at','desc')->get();
+        $memberSubscribeIds = $memberSubscribes->pluck('subscribe_id')->toArray();
         $items = [];
+        $subtitle = '';
         if (!empty($memberSubscribeIds)) {
             $subscribes = Subscribe::query()->whereIn('id', $memberSubscribeIds)->where('is_free', false)->get();
             foreach ($subscribes as $subscribe) {
                 $contentArray = array_filter(explode(' ', $subscribe->content));
                 $items = array_merge($items, $contentArray);
             }
+            $top = $memberSubscribes->first();
+            $subtitle = "过期时间:".$top->expired_at->format('Y-m-d H:i:s');
         }
-        return response(base64_encode(implode('', $items)));
+        return response()->json([
+            'code' => 200,
+            'message' => 'success',
+            'data' => [
+                'content' => base64_encode(implode('', $items)),
+                'subtitle'=>$subtitle
+            ],
+        ]);
     }
 }
