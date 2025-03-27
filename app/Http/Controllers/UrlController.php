@@ -37,7 +37,8 @@ class UrlController extends Controller
             ->get(['id', 'cover', 'title', 'url','icon']);
 
         foreach ($urls as &$url) {
-            $url->cover = Storage::disk('bitiful')->url($url->cover);
+            $url->cover = Storage::disk('public')->url($url->cover);
+            $url->icon = Storage::disk('public')->url($url->icon);
         }
 
         return response()->json([
