@@ -34,14 +34,14 @@ class OrderResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(function (): Builder {
-                $query = self::getEloquentQuery();
-                $user = auth()->user();
-                if ($user->role != "admin") {
-                    $query = $query->where('agent_id', $user->id);
-                }
-                return $query;
-            })
+            // ->query(function (): Builder {
+            //     $query = self::getEloquentQuery();
+            //     $user = auth()->user();
+            //     if ($user->role != "admin") {
+            //         $query = $query->where('agent_id', $user->id);
+            //     }
+            //     return $query;
+            // })
             ->columns([
                 Tables\Columns\TextColumn::make('no')->label('订单编号'),
                 Tables\Columns\TextColumn::make('merchant_no')->label('商户单号'),
